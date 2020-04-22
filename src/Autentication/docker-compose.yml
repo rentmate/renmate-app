@@ -1,0 +1,13 @@
+version: "2"
+services:
+ web:
+    container_name: web-auth
+    build: .
+    image: web-auth
+    networks:
+    - shared
+    ports:
+    - "3001:3001"
+networks:
+  shared:
+    external: true

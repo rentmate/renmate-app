@@ -1,0 +1,13 @@
+version: "2"
+services:
+ API:
+    container_name: apigateway
+    build: .
+    image: apigateway
+    networks:
+    - shared
+    ports:
+    - "3030:3030"
+networks:
+  shared:
+    external: true
