@@ -13,7 +13,7 @@ input MessageInput {
     content: String!
 }`;
 
-export const messagesQueries = `
+export const messagesQueries = ` 
     allMessages: [Message]!
     messageByReceptor(username: String!): [Message]!
     messageByUser(username: String!): [Message]!
