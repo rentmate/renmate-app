@@ -13,11 +13,15 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.checkValidCredentials(req.body.email, req.body.password)
         const token = await user.newAuthToken()
-        res.send({ user, token })
+        res.send({ user : user , token : token})
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send({error : 'Invalid user or password'})
     }
   })
+
+router.get('/me', authenticate, async (req, res) => {
+    res.send( { user : req.user })
+})
 
 router.patch('/me', authenticate, async (req, res) => {
   const updates = Object.keys(req.body)
@@ -50,35 +54,38 @@ router.patch('/me', authenticate, async (req, res) => {
   try {
       updates.forEach((update) => req.user[update] = req.body[update])
       await req.user.save()
-      res.send(req.user);
+      res.send({ user : req.user});
   } catch (error) {
-      res.status(400).send()
+      res.status(400).send({error : "Server error"})
   }
 
 })
 
 
 
-router.post('/logout', authenticate, async (req, res) => {
+router.post('/logout',  async (req, res) => {
   try {
-      req.user.tokens = req.user.tokens.filter((token) => {
-          return token.token !== req.token
+      console.log(req.body)
+      const user  = await  User.findOne({ _id:req.body.user._id}) 
+
+      user.tokens = user.tokens.filter((token) => {
+          return token.token !== req.body.token
       })
-      await req.user.save()
-      res.send()
+      await user.save()
+      res.send({ success : true })
   } catch (error) {
-      res.status(500).send()
+      res.status(500).send({error : "Server error"})
   }
 })
 
 
-router.post('/logoutall', authenticate, async (req, res) => {
+router.post('/logoutall',  async (req, res) => {
   try {
       req.user.tokens = []
       await req.user.save()
-      res.send()
+      res.send({ success : true })
   } catch (error) {
-      res.status(500).send()
+      res.status(500).send({error : "Server error"})
   }
 })
 

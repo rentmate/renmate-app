@@ -5,13 +5,14 @@ const { ObjectID } = require('mongodb');
 const authenticate = require("../middleware/auth");
 /* GET users listing. */
 
+
 router.post('/', async (req, res) => {
   //find an existing user
-  console.log("Hola")
+
   let user = await User.findOne({ email: req.body.email });
   if (user) {
-        console.log("User already exits"); 
-      return res.status(400).send();
+      console.log( {error : "User already exits"}); 
+      return res.status(400).send({error : "User already exits"});
   }
 
   user = new User({
@@ -22,43 +23,41 @@ router.post('/', async (req, res) => {
   });
   try {
       await user.save()
-      res.status(201).send({ user })
+      res.status(201).send({ success : true })
   } catch (e) {
-      res.status(400).send(e)
+      res.status(400).send({error : "Server error"})
   }
 })
 
-router.get('/me', authenticate, async (req, res) => {
-    res.send(req.user)
-})
+
 
   
-router.delete('/me', authenticate, async (req, res) => {
+router.delete('/me', async (req, res) => {
   if (!ObjectID.isValid(req.user._id)) {
-      return res.status(404).send();
+      return res.status(404).send({error : "User id not valid"});
   }
 
   try {
       await req.user.remove()
       res.send(req.user)
   } catch (error) {
-      res.status(500).send()
+      res.status(500).send({error : "Server error"})
   }
 })
 
 
 
-router.post('/getUser', authenticate, async (req, res) => {
+router.post('/getUser', async (req, res) => {
     if (!ObjectID.isValid(req.body.userid)) {
         console.log(req.body.userid         )
-        return res.status(404).send();
+        return res.status(404).send({error : "User id not valid"});
     }
     try {
         let user = await User.findOne({ _id: req.body.userid }).select( 
             'email username birthDate gender biography rating totalExchanges exchangesCanceled exchangesCanceledByOthers exchangeList garmentList magazineList profilePhoto');
         res.send(user);
     }catch (error) {
-        res.status(400).send()
+        res.status(400).send({error : "Server error"})
     }
   })
 
@@ -66,9 +65,9 @@ router.post('/getUser', authenticate, async (req, res) => {
 router.get('/getUsers', async (req, res) => {
     try {
         let user  = await User.find({});
-        res.send(user);
+        res.send({ users : user});
     }catch (error) {
-        res.status(400).send()
+        res.status(400).send({error : "Server error"})
     }
 })
 //router.post('/oauth/google', passport.authenticate('googleToken', { session: false }));

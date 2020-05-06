@@ -1,9 +1,9 @@
 version: "2"
 services:
  API:
-    container_name: apigateway
+    container_name: rentmate-api
     build: .
-    image: apigateway
+    image: rentmate-api
     networks:
     - shared
     ports:

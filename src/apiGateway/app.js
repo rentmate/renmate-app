@@ -4,6 +4,8 @@ const { ApolloServer } = require("apollo-server-express")
 const typeDefs  = require ("./src/User/typedef")
 const resolvers  = require ("./src/User/resolver")
 const app = express()
+const { getUser} = require('./src/User/services');
+
 app.use(bodyParser.json())
 const server = new ApolloServer({
   introspection: true,
@@ -12,10 +14,13 @@ const server = new ApolloServer({
   formatError: error => {
     return error
   },
-  context: ({ req, res }) => {
+  context: async ({ req }) => {
+    //console.log(req.headers)
+    const token = req.headers.authorization || '';
+    let user = await getUser(token);
     return {
-      req,
-      res,
+      user,
+      token
     }
   },
 })

@@ -1,0 +1,43 @@
+version: "2"
+services:
+
+ mongo:
+    container_name: rentmate-cuenta-aut-db
+    image: mongo  
+    networks:
+    - shared
+    ports:
+      - "27017:27017"
+ cuenta:
+    container_name: rentmate-cuenta-ms
+    build: ./Users/
+    image: rentmate-cuenta-ms
+    ports:
+    - "3000:3000"
+    depends_on:
+      - mongo
+    networks:
+      - shared
+ auth:
+    container_name: rentmate-autenticacion-ms 
+    build: ./Autenticacion
+    image: rentmate-autenticacion-ms 
+    networks:
+    - shared
+    ports:
+    - "3001:3001"
+    depends_on:
+      - mongo
+    networks:
+      - shared
+ API:
+    container_name: rentmate-api
+    build: ./apiGateway
+    image: rentmate-api
+    networks:
+    - shared
+    ports:
+    - "3030:3030"
+networks:
+  shared:
+    external: true
