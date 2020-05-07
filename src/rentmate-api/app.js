@@ -8,15 +8,18 @@ const { mergeTypes, mergeResolvers } = require('merge-graphql-schemas')
 //import all typedefs
 const userType  = require ("./src/User/typedef")
 const chatsType  = require ("./src/Chats/typedef")
+const anunciosType  = require ("./src/Anuncios/typedef")
 // import all resolvers
 const userResolver  = require ("./src/User/resolver")
 const chatsResolver  = require ("./src/Chats/resolver")
+const AnunciosResolver = require ("./src/Anuncios/resolver")
 
 
 // Merge Typedefinitions
 const types = [
   userType,
   chatsType,
+  anunciosType
 ];
 
 let typeDefs = mergeTypes(types, { all: true });
@@ -26,6 +29,7 @@ let typeDefs = mergeTypes(types, { all: true });
 const resolvers_concat = [
   userResolver,
   chatsResolver,
+  AnunciosResolver
 ];
 
 let resolvers = mergeResolvers(resolvers_concat);
