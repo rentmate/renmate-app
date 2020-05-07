@@ -1,12 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { ApolloServer } = require("apollo-server-express")
-const typeDefs  = require ("./src/User/typedef")
-const resolvers  = require ("./src/User/resolver")
-const app = express()
-const { getUser} = require('./src/User/services');
+const { ApolloServer } = require("apollo-server-express");
+const typeDefs  = require ("./src/Chats/typedef");
+const resolvers  = require ("./src/Chats/resolver");
+const app = express();
+//const { getUser} = require('./src/User/services');
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 const server = new ApolloServer({
   introspection: true,
   typeDefs,
@@ -14,7 +14,7 @@ const server = new ApolloServer({
   formatError: error => {
     return error
   },
-  context: async ({ req }) => {
+  /*context: async ({ req }) => {
     //console.log(req.headers)
     const token = req.headers.authorization || '';
     let user = await getUser(token);
@@ -22,9 +22,9 @@ const server = new ApolloServer({
       user,
       token
     }
-  },
-})
-server.applyMiddleware({ app, path: "/graphql" })
-var port = "3030"
+  },*/
+});
+server.applyMiddleware({ app, path: "/graphql" });
+var port = "3030";
 app.set("port", port);
 module.exports = app;
