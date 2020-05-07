@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+
+  rentmate-chats-ms:
+    container_name: rentmate-chats-ms
+    build: .
+    depends_on:
+      - rentmate-chats-db
+
+    links:
+      - rentmate-chats-db
+
+    ports:
+      - "4003:4003"
+
+    tty: true
+
+
+  rentmate-chats-db:
+    container_name: rentmate-chats-db
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongodata:/data/db"
+volumes:
+   mongodata:
