@@ -1,0 +1,152 @@
+#Test with: http://editor.swagger.io/
+
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservice messages
+  description: golang + Mongo
+  license:
+    name: Software Architecture 2018-II
+host: 192.168.99.100:4003
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /rentmate-chats-ms:
+    post:
+      summary: Creates a new message
+      operationId: createmessage
+      parameters:
+        - name: message
+          in: body
+          required: true
+          description: message Object
+          schema:
+            $ref: '#/definitions/MensajeInput'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Mensaje'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    get:
+      summary: Returns all messages
+      operationId: getAllmessages
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/MensajesList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /rentmate-chats-ms/{code}:
+
+    delete:
+      summary: Deletes a message with the given code
+      operationId: deletemessage
+      parameters:
+        - name: code
+          in: path
+          description: The code of the message to be deleted
+          required: true
+          type: integer
+      responses:
+        '204':
+          description: No content
+          schema:
+            $ref: '#/definitions/messageCode'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+definitions:
+
+  # messages
+  Mensaje:
+
+    type: object
+    properties:
+      id:
+        type: string
+      User1:
+        type: string
+      User2:
+        type: string
+      Subject:
+        type: string
+      Content:
+        type: string
+
+  MensajeInput:
+    type: object
+    properties:
+      id:
+        type: string
+      User1:
+        type: string
+      User2:
+        type: string
+      Subject:
+        type: string
+      Content:
+        type: string
+
+  MensajesList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/Mensaje'
+
+  messageCode:
+    type: object
+    properties:
+      code:
+        type: integer
+
+# Errors
+  ErrorModel:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+      code:
+        type: number
+      description:
+        type: object

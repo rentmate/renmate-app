@@ -1,0 +1,13 @@
+version: "2"
+services:
+ web:
+    container_name: rentmate-autenticacion-ms 
+    build: .
+    image: rentmate-autenticacion-ms 
+    networks:
+    - shared
+    ports:
+    - "3001:3001"
+networks:
+  shared:
+    external: true
