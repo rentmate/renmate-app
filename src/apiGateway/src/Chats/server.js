@@ -1,3 +1,4 @@
-export const url = process.env.MESSAGES_URL
-export const port = process.env.MESSAGES_PORT
-export const entryPoint = process.env.MESSAGES_ENTRY
+const Chats_url = "http://192.168.99.100:4003"
+
+
+module.exports = {Chats_url}

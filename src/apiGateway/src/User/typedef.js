@@ -1,4 +1,4 @@
-const { gql } = require( "apollo-server-express")
+const { gql } = require( "apollo-server-express");
 const typeDefs = gql`
   type Token { 
     _id: String
@@ -31,14 +31,14 @@ const typeDefs = gql`
   type Response {
     success: Boolean
   }
-  type Query {
+  type Query2 {
     me: User
     getUsers: [User]
   }
-  type Mutation {
+  type Mutation2 {
     addUser(user: postUser): Response
     login(login: postLogin): respLogin
     logout: Response 
   }
 `
-module.exports = typeDefs
+module.exports = typeDefs;
