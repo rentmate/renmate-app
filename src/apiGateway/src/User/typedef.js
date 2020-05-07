@@ -15,7 +15,6 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    tokens: [postToken]
   }
   input postToken { 
     _id: String
@@ -25,16 +24,21 @@ const typeDefs = gql`
     email: String
     password: String
   }
+  type respLogin { 
+    user: User,
+    token: String
+  }
   type Response {
     success: Boolean
   }
   type Query {
-    me(token: String): User
+    me: User
     getUsers: [User]
   }
   type Mutation {
-    addUser(user: postUser): User
-    login(login: postLogin): String
+    addUser(user: postUser): Response
+    login(login: postLogin): respLogin
+    logout: Response 
   }
 `
 module.exports = typeDefs
