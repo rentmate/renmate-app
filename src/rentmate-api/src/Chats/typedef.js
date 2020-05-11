@@ -7,14 +7,14 @@ type Message {
     user2: String!
     subject: String!
     content: String!
-    date: String
+    date: String!
 }
 input MessageInput {
     user1: String!
     user2: String!
     subject: String!
     content: String!
-    date: String
+    date: String!
 }
 
 type Chat {

@@ -3,7 +3,7 @@ const { Chats_url} = require( "./server")
 
 
 const allMessages = async()=>{
-    const res = await fetch(Chats_url + '/rentmate-chats-ms')
+    const res = await fetch(Chats_url + '/rentmate-chats-ms');
     const json = res.json();
     console.log(res);
     return json;
@@ -22,7 +22,7 @@ const addMessages = async(message) => {
 
 
 const delMessage = async(id)=>{
-    const res = await fetch(Chats_url + '/rentmate-chats-ms/' + id)
+    const res = await fetch(Chats_url + '/rentmate-chats-ms/' + id);
     const json = res.json();
     console.log(res);
     return json;

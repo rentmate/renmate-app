@@ -1,0 +1,32 @@
+version: '2.1'
+
+services:
+  rents-ms:
+    container_name: rentmate-renta-ms
+    build:
+      context: .
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: rentmate_rentas
+      PGPORT: 5432
+      PGHOST: 192.168.99.100
+    ports:
+      - "3005:3005"
+    depends_on:
+      - rents-db
+
+  rents-db:
+    container_name: rentmate-renta-db
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
