@@ -7,7 +7,7 @@ info:
   description: golang + Mongo
   license:
     name: Software Architecture 2018-II
-host: 192.168.99.100:4003
+host: rentmate-chats-ms:4003
 basePath: /
 schemes:
   - http

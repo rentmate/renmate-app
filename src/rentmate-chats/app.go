@@ -35,8 +35,9 @@ type MESSAGE struct {
 	Date	string        `json:"date"`
 }
 
+
 func main() {
-	session, err := mgo.Dial("192.168.99.100:27017")
+	session, err := mgo.Dial("rentmate-chats-db:27017")
 	if err != nil {
 		fmt.Printf("Houston, we have a problem")
 		panic(err)

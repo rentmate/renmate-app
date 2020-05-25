@@ -3,13 +3,14 @@ var router = express.Router();
 const User = require('../models/users');
 const { ObjectID } = require('mongodb');
 const authenticate = require("../middleware/auth");
+const login_ldap = require("../middleware/ldap")
 /* GET users listing. */
 
 
 //router.post('/oauth/google', passport.authenticate('googleToken', { session: false }));
 
 
-router.post('/login', async (req, res) => {
+router.post('/login', login_ldap ,async (req, res) => {
     try {
         const user = await User.checkValidCredentials(req.body.email, req.body.password)
         const token = await user.newAuthToken()

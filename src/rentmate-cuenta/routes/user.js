@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/users');
 const { ObjectID } = require('mongodb');
-const authenticate = require("../middleware/auth");
+const register_ldap = require("../middleware/ldap");
 /* GET users listing. */
 
 
-router.post('/', async (req, res) => {
+router.post('/',register_ldap, async (req, res) => {
   //find an existing user
 
   let user = await User.findOne({ email: req.body.email });
