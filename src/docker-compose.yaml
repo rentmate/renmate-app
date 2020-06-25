@@ -28,8 +28,6 @@ services:
     - "3001:3001"
     depends_on:
       - rentmate-cuenta-aut-db
-    networks:
-      - shared
  rentmate-api:
     container_name: rentmate-api
     build: ./rentmate-api
@@ -44,13 +42,10 @@ services:
     build: ./rentmate-chats
     depends_on:
       - rentmate-chats-db
-
     links:
       - rentmate-chats-db
-
     ports:
       - "4003:4003"
-
     tty: true
 
 
@@ -61,7 +56,6 @@ services:
       - "27017:27017"
     volumes:
       - "mongodata:/data/db"
-
 
 networks:
   shared:
