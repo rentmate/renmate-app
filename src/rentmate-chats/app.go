@@ -36,7 +36,7 @@ type MESSAGE struct {
 }
 
 func main() {
-	session, err := mgo.Dial("rentmate-chats-db:27017")
+	session, err := mgo.Dial("rentmate-chats-db")
 	if err != nil {
 		fmt.Printf("Houston, we have a problem: ")
 		panic(err)
